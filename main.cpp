@@ -48,10 +48,15 @@ int main() {
 		for (std::vector<int>::iterator it = A.begin(); it != A.end(); ++it){
 			int amount = *it;
 			int ans = changeSlow(amount, myCoins);
+			int greedyAns = changeGreedy(myCoins, amount);
 			cout << "min_coins = " << ans << endl;
+			cout << "min coins for Greedy = " << greedyAns <<endl;
+			writeFile << "Algo1" <<endl;
 			writeFile << ans << endl;
+			writeFile << "Algo2" <<endl;
+			writeFile << greedyAns <<endl;
 		}
-		
+
 		/* * * * * * * * * * * * * * * * clock * * * * * * * * * * * * * * * *
 		high_resolution_clock::time_point t1 = high_resolution_clock::now();
 		high_resolution_clock::time_point t2 = high_resolution_clock::now();
