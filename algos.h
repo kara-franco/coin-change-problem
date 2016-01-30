@@ -14,5 +14,6 @@ const signed int SMALL = -32767;
 const signed int LARGE = 32767;
 
 int changeSlow(int amount, vector<int> const coinArray);
+int changeGreedy(std::vector<int> availableCoins, int makeChangeFrom);
 
 #endif // ALGOS_H_INCLUDED
