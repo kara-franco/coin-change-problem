@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "filter.h"
 
 #include <iostream>
@@ -43,7 +42,7 @@ void extractLines(ifstream& readFile, string fileName, vector<string> &myArrays)
 		if (line.size() != 0)
 		{
 			myArrays.push_back(line);
-			cout << line << endl;
+			// cout << line << endl;
 		}
 	}
 
@@ -101,10 +100,10 @@ void extractInts(vector<string> &myArrays, int row, vector<int> &paArray) {//als
 	}
 
 	//cout << "extracted ints" << endl;
-	for (unsigned int place = 0; place < paArray.size(); place++) {
-		cout << paArray[place] << " ";
+	/* for (unsigned int place = 0; place < paArray.size(); place++) {
+		 cout << paArray[place] << " ";
 	}
-	cout << endl;
+	cout << endl;*/
 }
 
 /**************************************************************************

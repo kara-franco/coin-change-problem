@@ -6,8 +6,6 @@ Overview:
 Read in input file of format [x, ...z] on each line and output max sub array into MSS_Results.txt
 */
 
-#include "stdafx.h"
-
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -29,6 +27,7 @@ int main() {
 	vector <string> myLines;
 	vector <int> myCoins;
 	vector <int> A;
+	vector<vector<int>> table;
 
 	//get filename
 	cout << "Enter txt filename, don't put extension." << endl;
@@ -36,7 +35,7 @@ int main() {
 
 	//extract parent arrays from file
 	extractLines(readFile, fileName, myLines);
-	cout << myLines.size() << endl;
+	//cout << myLines.size() << endl;
 	/**make result file**/
 	writeFile.open("Change.txt");
 
@@ -49,18 +48,16 @@ int main() {
 		//cout << "feeding to alg" << endl;
 		for (std::vector<int>::iterator it = A.begin(); it != A.end(); ++it){
 			int amount = *it;
+			high_resolution_clock::time_point t1 = high_resolution_clock::now();
 			int min_coin = changeSlow(amount, myCoins);
+			high_resolution_clock::time_point t2 = high_resolution_clock::now();
+			duration<double> time_span1 = duration_cast<duration<double>>(t2 - t1);
+		    cout << "Time: " << time_span1.count() <<  endl;
 			cout << "Algorithm 1 min_coins = " << min_coin << endl;
 			writeFile << min_coin << endl;
 			writeFile << endl;
 		}
-		
-		/* * * * * * * * * * * * * * * * clock * * * * * * * * * * * * * * * *
-		high_resolution_clock::time_point t1 = high_resolution_clock::now();
-		high_resolution_clock::time_point t2 = high_resolution_clock::now();
-		duration<double> time_span1 = duration_cast<duration<double>>(t2 - t1);
-		cout << "Time: " << time_span1.count() <<  endl;
-		* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 		myCoins.clear();
 		A.clear();
 	}
@@ -76,24 +73,38 @@ int main() {
 		//cout << "feeding to alg" << endl;
 		for (std::vector<int>::iterator it = A.begin(); it != A.end(); ++it) {
 			int amount = *it;
-			int min_coin = changeGreedy(myCoins, amount);
-			cout << "Algorithm 2 min_coins = " << min_coin << endl;
-			writeFile << min_coin << endl;
+			high_resolution_clock::time_point t1 = high_resolution_clock::now();
+			vector <int>  results = changeGreedy(myCoins, amount);
+			high_resolution_clock::time_point t2 = high_resolution_clock::now();
+			duration<double> time_span1 = duration_cast<duration<double>>(t2 - t1);
+		    cout << "Time: " << time_span1.count() <<  endl;
+			cout << "Algorithm 2 min_coins = " << results[results.size()-1] << endl;
+			writeFile << results[results.size()-1] << endl;
 			writeFile << endl;
 		}
 
-		/* * * * * * * * * * * * * * * * clock * * * * * * * * * * * * * * * *
-		high_resolution_clock::time_point t1 = high_resolution_clock::now();
-		high_resolution_clock::time_point t2 = high_resolution_clock::now();
-		duration<double> time_span1 = duration_cast<duration<double>>(t2 - t1);
-		cout << "Time: " << time_span1.count() <<  endl;
-		* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 		myCoins.clear();
 		A.clear();
 	}
 
 	cout << "" << endl;
+	/*************	Algorithm 3 *******************/
+	//extract integers from arrays, pass through function and write to output file
+	for (int place = 0; place<myLines.size(); place+=2){
+		extractInts(myLines, place, myCoins);
+		extractInts(myLines, place+1, A);
+		high_resolution_clock::time_point t1 = high_resolution_clock::now();
+		table = changedp(myCoins, A);
+		high_resolution_clock::time_point t2 = high_resolution_clock::now();
+			duration<double> time_span1 = duration_cast<duration<double>>(t2 - t1);
+		    cout << "Time: " << time_span1.count() <<  endl;
+		cout << "Algorithm 3 min_coins = " << table[myCoins.size()-1][A[0]] << endl;
+		//getChangeDP(myCoins.size()-1, A[0], myCoins, table, writeFile);
 
+		table.clear();
+		myCoins.clear();
+		A.clear();
+	}
 
 	/**close result file**/
 	writeFile.close();
