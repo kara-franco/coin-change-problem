@@ -20,7 +20,7 @@ using namespace std::chrono;
 
 #include "filter.h"
 #include "algos.h"
-//testing
+
 int main() {
 	ifstream readFile;
 	ofstream writeFile;
@@ -49,23 +49,12 @@ int main() {
 		//cout << "feeding to alg" << endl;
 		for (std::vector<int>::iterator it = A.begin(); it != A.end(); ++it){
 			int amount = *it;
-<<<<<<< HEAD
 			int min_coin = changeSlow(amount, myCoins);
 			cout << "Algorithm 1 min_coins = " << min_coin << endl;
 			writeFile << min_coin << endl;
 			writeFile << endl;
-=======
-			int ans = changeSlow(amount, myCoins);
-			int greedyAns = changeGreedy(myCoins, amount);
-			cout << "min_coins = " << ans << endl;
-			cout << "min coins for Greedy = " << greedyAns <<endl;
-			writeFile << "Algo1" <<endl;
-			writeFile << ans << endl;
-			writeFile << "Algo2" <<endl;
-			writeFile << greedyAns <<endl;
->>>>>>> 1066f043d1fe6c4042aa531bcc68c20a68585ad8
 		}
-
+		
 		/* * * * * * * * * * * * * * * * clock * * * * * * * * * * * * * * * *
 		high_resolution_clock::time_point t1 = high_resolution_clock::now();
 		high_resolution_clock::time_point t2 = high_resolution_clock::now();
