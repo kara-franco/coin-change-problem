@@ -119,13 +119,63 @@ vector< vector<int> > changedp(vector<int> const &myCoins, vector<int> const &A)
 	return table;
 }
 
+<<<<<<< HEAD
+=======
+	return numOfCoins;
+}
+
+/*****************************************************************************************
+* changedp
+* Parameters: coins, A
+* Description: bottom up dynamic programming
+******************************************************************************************/
+vector< vector<int> > changedp(vector<int> const &myCoins, vector<int> const &A){ 
+	int change = A[0] + 1;
+	int numCoins = myCoins.size();
+	int coin = myCoins[0]; //start at the first row
+	vector<vector<int>> table(numCoins, vector<int>(change)); 
+	//take care of base row
+	for(int y = 0; y<change; y++){
+		if(y<coin){
+			table[0][y] = 0; //exclude, take value from top or set to 0
+		}
+		else{
+			table[0][y] = table[0][y-coin] + 1;//no need to do comparison yet
+		}
+	}
+	//now do the rest starting at the second row  
+	for(int x = 1; x<numCoins; x++){
+		coin = myCoins[x]; //change coin value we're looking at
+		for(int y = 0; y<change; y++){
+			if(y<coin){ //exclude
+				table[x][y] = table[x-1][y]; //take value from top
+			}
+			else{ //include or not?
+				if(((table[x][y-coin])+1)<(table[x-1][y])){ //we found better number of coins
+					table[x][y] = (table[x][y-coin])+1;
+				}
+				else{
+					table[x][y] = table[x-1][y]; //exclude, the top is better
+				}
+			}
+		}
+	}		
+
+	return table;
+}
+
+>>>>>>> 890e2da46204b0712e0a6b84f3896cc402cc345c
 /*****************************************************************************************
 * getChangeDP
 * Parameters: number of coins, A, table
 * Description: finding coins that make up change
 ******************************************************************************************/
 void getChangeDP(int numCoins, int change, vector<int> const &myCoins, vector< vector<int> > &table, ofstream& writeFile){
+<<<<<<< HEAD
 	int x = numCoins;
+=======
+	int x = numCoins; 
+>>>>>>> 890e2da46204b0712e0a6b84f3896cc402cc345c
 	int y = change;
 	vector<int> numberMinCoins;
 	int testChange;
@@ -146,8 +196,13 @@ void getChangeDP(int numCoins, int change, vector<int> const &myCoins, vector< v
 				if(change == 0){
 					break;
 				}
+<<<<<<< HEAD
 				while(testChange < 0){ //move up
 					numCoins = numCoins-1;
+=======
+				while(testChange < 0){ //move up 
+					numCoins = numCoins-1; 
+>>>>>>> 890e2da46204b0712e0a6b84f3896cc402cc345c
 					testChange = change-myCoins[numCoins];
 				}
 			}
@@ -175,10 +230,18 @@ void getChangeDP(int numCoins, int change, vector<int> const &myCoins, vector< v
 			writeFile << tallyMinCoins[k] << "]" << endl;
 		}
 		else{
+<<<<<<< HEAD
 			writeFile << tallyMinCoins[k] << ", ";
+=======
+			writeFile << tallyMinCoins[k] << ", ";		
+>>>>>>> 890e2da46204b0712e0a6b84f3896cc402cc345c
 		}
 	}
 	writeFile << table[x][y] << endl;
 	numberMinCoins.clear();
 	table.clear();
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 890e2da46204b0712e0a6b84f3896cc402cc345c

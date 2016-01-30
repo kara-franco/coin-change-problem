@@ -28,7 +28,11 @@ int main() {
 	vector <int> myCoins;
 	vector <int> A;
 	vector<vector<int>> table;
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 890e2da46204b0712e0a6b84f3896cc402cc345c
 	//get filename
 	cout << "Enter txt filename, don't put extension." << endl;
 	cin >> fileName;
@@ -93,11 +97,15 @@ int main() {
 	for (int place = 0; place<myLines.size(); place+=2){
 		extractInts(myLines, place, myCoins);
 		extractInts(myLines, place+1, A);
+<<<<<<< HEAD
 		high_resolution_clock::time_point t1 = high_resolution_clock::now();
 		table = changedp(myCoins, A);
 		high_resolution_clock::time_point t2 = high_resolution_clock::now();
 			duration<double> time_span1 = duration_cast<duration<double>>(t2 - t1);
 		    cout << "Time: " << time_span1.count() <<  endl;
+=======
+		table = changedp(myCoins, A);
+>>>>>>> 890e2da46204b0712e0a6b84f3896cc402cc345c
 		cout << "Algorithm 3 min_coins = " << table[myCoins.size()-1][A[0]] << endl;
 		//getChangeDP(myCoins.size()-1, A[0], myCoins, table, writeFile);
 
