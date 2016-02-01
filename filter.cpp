@@ -1,5 +1,4 @@
 #include "filter.h"
-
 #include <iostream>
 
 /*****************************************************************
@@ -101,7 +100,7 @@ void extractInts(vector<string> &myArrays, int row, vector<int> &paArray) {//als
 
 	//cout << "extracted ints" << endl;
 	/* for (unsigned int place = 0; place < paArray.size(); place++) {
-		 cout << paArray[place] << " ";
+	cout << paArray[place] << " ";
 	}
 	cout << endl;*/
 }

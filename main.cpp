@@ -1,9 +1,10 @@
 /*
 Author: Rosa Tung
 Date Created: 1.19.16
-Date modified: 1.19.16
+Date Last Modified: 1.31.16
 Overview:
-Read in input file of format [x, ...z] on each line and output max sub array into MSS_Results.txt
+Read in input file of format [x, ...z] on every other line, with an integer below each [x, ...z].
+Output minimum coins used with minimum coin total into [inputfile name]change.txt
 */
 
 #include <iostream>
@@ -28,11 +29,7 @@ int main() {
 	vector <int> myCoins;
 	vector <int> A;
 	vector<vector<int>> table;
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> 890e2da46204b0712e0a6b84f3896cc402cc345c
 	//get filename
 	cout << "Enter txt filename, don't put extension." << endl;
 	cin >> fileName;
@@ -41,36 +38,43 @@ int main() {
 	extractLines(readFile, fileName, myLines);
 	//cout << myLines.size() << endl;
 	/**make result file**/
-	writeFile.open("Change.txt");
+	writeFile.open(fileName + "change.txt");
 
 	/*************	Algorithm 1 *******************/
 	//extract integers from arrays, pass through function and write to output file
-	//cout << "before extract" << endl;
+	writeFile << "Algorithm 1" << endl;
 	for (int place = 0; place < myLines.size(); place += 2) {
 		extractInts(myLines, place, myCoins);
 		extractInts(myLines, place + 1, A);
-		//cout << "feeding to alg" << endl;
-		for (std::vector<int>::iterator it = A.begin(); it != A.end(); ++it){
-			int amount = *it;
-			high_resolution_clock::time_point t1 = high_resolution_clock::now();
-			int min_coin = changeSlow(amount, myCoins);
-			high_resolution_clock::time_point t2 = high_resolution_clock::now();
-			duration<double> time_span1 = duration_cast<duration<double>>(t2 - t1);
-		    cout << "Time: " << time_span1.count() <<  endl;
-			cout << "Algorithm 1 min_coins = " << min_coin << endl;
-			writeFile << min_coin << endl;
-			writeFile << endl;
-		}
-
+			for (std::vector<int>::iterator it = A.begin(); it != A.end(); ++it){
+				int amount = *it;
+				high_resolution_clock::time_point t1 = high_resolution_clock::now();
+				std::vector<int> returnCoinsUsed;
+				int min_coin = getChangeSlow(myCoins, amount, returnCoinsUsed);
+				//cout << returnCoinsUsed[returnCoinsUsed.size()] << endl;
+				high_resolution_clock::time_point t2 = high_resolution_clock::now();
+				duration<double> time_span1 = duration_cast<duration<double>>(t2 - t1);
+				//writeFile << time_span1.count() <<  endl;
+				writeFile << "[";
+				for (int k = 0; k<returnCoinsUsed.size(); k++) {
+					if (k == returnCoinsUsed.size() - 1) {
+						writeFile << returnCoinsUsed[k] << "]" << endl;
+					}
+					else {
+						writeFile << returnCoinsUsed[k] << ", ";
+					}
+				}
+				//cout << min_coin << endl;
+				writeFile << min_coin << endl;
+			}
 		myCoins.clear();
 		A.clear();
 	}
 
-	cout << "" << endl;
-
+	writeFile << "" << endl;
 	/*************	Algorithm 2 *******************/
 	//extract integers from arrays, pass through function and write to output file
-	//cout << "before extract" << endl;
+	writeFile << "Algorithm 2" << endl;
 	for (int place = 0; place < myLines.size(); place += 2) {
 		extractInts(myLines, place, myCoins);
 		extractInts(myLines, place + 1, A);
@@ -81,33 +85,36 @@ int main() {
 			vector <int>  results = changeGreedy(myCoins, amount);
 			high_resolution_clock::time_point t2 = high_resolution_clock::now();
 			duration<double> time_span1 = duration_cast<duration<double>>(t2 - t1);
-		    cout << "Time: " << time_span1.count() <<  endl;
-			cout << "Algorithm 2 min_coins = " << results[results.size()-1] << endl;
-			writeFile << results[results.size()-1] << endl;
-			writeFile << endl;
+			//writeFile << time_span1.count() << endl;
+			writeFile << "[";
+			for (int k = 0; k<results.size() - 1; k++) {
+				if (k == results.size() - 2) {
+					writeFile << results[k] << "]" << endl;
+				}
+				else {
+					writeFile << results[k] << ", ";
+				}
+			}
+			writeFile << results[results.size()-1] << endl; 
 		}
-
+	
 		myCoins.clear();
 		A.clear();
 	}
-
-	cout << "" << endl;
+	writeFile << "" << endl; 
 	/*************	Algorithm 3 *******************/
 	//extract integers from arrays, pass through function and write to output file
-	for (int place = 0; place<myLines.size(); place+=2){
+	writeFile << "Algorithm 3" << endl;
+	for (int place = 0; place<myLines.size(); place += 2) {
 		extractInts(myLines, place, myCoins);
-		extractInts(myLines, place+1, A);
-<<<<<<< HEAD
+		extractInts(myLines, place + 1, A);
 		high_resolution_clock::time_point t1 = high_resolution_clock::now();
 		table = changedp(myCoins, A);
 		high_resolution_clock::time_point t2 = high_resolution_clock::now();
-			duration<double> time_span1 = duration_cast<duration<double>>(t2 - t1);
-		    cout << "Time: " << time_span1.count() <<  endl;
-=======
-		table = changedp(myCoins, A);
->>>>>>> 890e2da46204b0712e0a6b84f3896cc402cc345c
-		cout << "Algorithm 3 min_coins = " << table[myCoins.size()-1][A[0]] << endl;
-		//getChangeDP(myCoins.size()-1, A[0], myCoins, table, writeFile);
+		duration<double> time_span1 = duration_cast<duration<double>>(t2 - t1);
+		//writeFile << time_span1.count() << endl;
+		//writeFile << table[myCoins.size()-1][A[0]] << endl;
+		getChangeDP(myCoins.size()-1, A[0], myCoins, table, writeFile);
 
 		table.clear();
 		myCoins.clear();
@@ -116,8 +123,6 @@ int main() {
 
 	/**close result file**/
 	writeFile.close();
-
-
 
 	return 0;
 }

@@ -2,6 +2,7 @@
 /*
 filter.h
 Created by Rosa Tung on 1.19.16
+Last Modified by Group: 1.31.16
 */
 
 #ifndef FILTER_H
