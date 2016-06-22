@@ -11,12 +11,19 @@ A user can input a testfile into the program to test the three algorithms on the
 To Run
 
 To run this project, place the following files into a directory along with the .txt file that you wish to test the algorithms against.
+
 main.cpp
+
 yourTestFile.txt
+
 filter.cpp
+
 filter.h
+
 algos.cpp
+
 algos.h
+
 makefile
 
 Next, run the makefile to compile by entering “make” (without the quotes “ “) into the flip server. 
